@@ -1,0 +1,9 @@
+build/
+Files/build/
+demo_repo/
+*.exe
+*.obj
+*.pdb
+*.ilk
+.vs/
+CMakeSettings.json

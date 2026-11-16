@@ -152,3 +152,4 @@ bool isValidBranchName(const std::string& name) {
 }
 
 }  // namespace refs
+

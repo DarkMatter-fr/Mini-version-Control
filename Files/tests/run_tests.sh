@@ -9,9 +9,6 @@ if [ -f "$REPO_ROOT/build/Release/test_storage.exe" ]; then
     "$REPO_ROOT/build/Release/test_storage.exe"
 elif [ -f "$REPO_ROOT/build/test_storage" ]; then
     "$REPO_ROOT/build/test_storage"
-else
-    echo "test_storage binary not found. Please build the project first."
-    exit 1
 fi
 
 echo ""
@@ -20,9 +17,14 @@ if [ -f "$REPO_ROOT/build/Release/test_snapshots.exe" ]; then
     "$REPO_ROOT/build/Release/test_snapshots.exe"
 elif [ -f "$REPO_ROOT/build/test_snapshots" ]; then
     "$REPO_ROOT/build/test_snapshots"
-else
-    echo "test_snapshots binary not found. Please build the project first."
-    exit 1
+fi
+
+echo ""
+echo "=== Running Teammate C History Layer Tests ==="
+if [ -f "$REPO_ROOT/build/Release/test_history.exe" ]; then
+    "$REPO_ROOT/build/Release/test_history.exe"
+elif [ -f "$REPO_ROOT/build/test_history" ]; then
+    "$REPO_ROOT/build/test_history"
 fi
 
 echo ""

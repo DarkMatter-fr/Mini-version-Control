@@ -34,6 +34,22 @@ A lightweight command-line version control system modeled on Git's internals, de
   - `git status` (`src/commands/status.cpp`): $O(N)$ comparison across HEAD commit tree, index, and working directory. Reports staged changes (new, modified, deleted), unstaged modifications (modified, deleted), and untracked files.
   - `git checkout <branch | commit>` (`src/commands/checkout.cpp`): Restores working tree from target commit tree, updates index, deletes removed files, updates HEAD. Includes **dirty-tree safety checks** preventing uncommitted or untracked changes from being overwritten.
 
+### 3. Teammate C: History, DAG, Merging & Diffing
+* **Commit Graph & DAG Traversal (`include/commit_graph.hpp`, `src/commit_graph.cpp`)**:
+  - Direct Acyclic Graph (DAG) model of commits linked by parent pointers.
+  - History traversal walking commits in newest-first topological/timestamp order.
+  - Lowest Common Ancestor (LCA) discovery using Breadth-First Search (BFS) reachability for `merge-base`.
+* **Diff Engine & Dynamic Programming LCS (`include/diff.hpp`, `src/diff.cpp`)**:
+  - $O(M \times N)$ Longest Common Subsequence (LCS) dynamic programming matrix.
+  - Backtracking line-by-line edit script generation (`diffLines`).
+  - Unified diff formatter with `--- a/file`, `+++ b/file`, `@@ -start,len +start,len @@` hunk headers, additions (`+`), deletions (`-`), and context (` `).
+* **History & Branching Commands**:
+  - `git branch [-d <branch>] [<branch>]` (`src/commands/branch.cpp`): List existing branches with `*` indicating the active branch, create new branch pointing to current HEAD, or safely delete a branch with `-d`.
+  - `git log` (`src/commands/log.cpp`): Formatted traversal of commits from HEAD backwards, outputting commit hash, author, date, and commit message.
+  - `git merge-base <a> <b>` (`src/commands/merge.cpp`): Computes and outputs the lowest common ancestor commit hash between two branches/commits.
+  - `git merge <branch>` (`src/commands/merge.cpp`): Merges the specified branch into the current branch. Supports Fast-Forward merges updating working tree, index, and branch ref.
+  - `git diff [<commit1> [<commit2>]]` (`src/commands/diff.cpp`): Line-by-line diff between working directory and staging index, or between two arbitrary commits.
+
 ---
 
 ## Building the Project
@@ -71,12 +87,17 @@ The compiled binary will be placed at:
    .\build\Release\test_snapshots.exe
    ```
 
-3. **Git Parity & End-to-End Verification (`test_git_parity.py`):**
+3. **Teammate C History & DAG Layer Unit Tests (`test_history`):**
+   ```bash
+   .\build\Release\test_history.exe
+   ```
+
+4. **Git Parity & End-to-End Verification (`test_git_parity.py`):**
    ```bash
    python tests/test_git_parity.py
    ```
 
-4. **All Tests Runner:**
+5. **All Tests Runner:**
    - PowerShell (Windows):
      ```powershell
      powershell -ExecutionPolicy Bypass -File tests/run_tests.ps1

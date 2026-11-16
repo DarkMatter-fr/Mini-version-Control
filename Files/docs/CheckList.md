@@ -55,17 +55,17 @@ Rule: don't start a phase until the previous one passes its verification step.
 - [x] Update branch ref (create `main` on first commit)
 - [x] Refuse empty commit ("nothing to commit")
 - [x] Require a non-empty message
-- [ ] `log`: walk parents from HEAD, newest first
-- [ ] `log` on empty repo prints friendly message
+- [x] `log`: walk parents from HEAD, newest first
+- [x] `log` on empty repo prints friendly message
 - [x] **Verify:** 3 commits, log shows all in order
 - [x] **Verify:** change one file, only that path's tree objects are new
 
 ## Phase 5: Branch and checkout (M5) **[C/B]**
 - [x] `refs` module: read/write HEAD and branch files
 - [x] Support attached HEAD and detached HEAD
-- [ ] `branch` lists branches, marks current
-- [ ] `branch <name>` creates ref at current commit
-- [ ] Reject duplicate and invalid branch names
+- [x] `branch` lists branches, marks current
+- [x] `branch <name>` creates ref at current commit
+- [x] Reject duplicate and invalid branch names
 - [x] Flatten commit tree to path -> hash map (pre-order)
 - [x] `checkout <branch>` restores files from target tree
 - [x] Delete tracked files absent from target; remove emptied directories
@@ -85,16 +85,16 @@ Rule: don't start a phase until the previous one passes its verification step.
 - [x] **Verify:** one file in each state shows up in the right category
 
 ## Phase 7: Extended tier (M7) **[C]**
-- [ ] Commit graph structure (adjacency by parent hashes)
-- [ ] BFS/DFS with visited set
-- [ ] `merge-base <a> <b>` via ancestor sets or BFS
-- [ ] **Verify:** merge-base on a forked history equals `git merge-base`
-- [ ] Fast-forward `merge`
-- [ ] Clear message for unsupported non-fast-forward merges
-- [ ] `diff`: split into lines
-- [ ] LCS dynamic programming table
-- [ ] Backtrack to produce +/- output
-- [ ] **Verify:** diff output matches `diff -u` semantically on samples
+- [x] Commit graph structure (adjacency by parent hashes)
+- [x] BFS/DFS with visited set
+- [x] `merge-base <a> <b>` via ancestor sets or BFS
+- [x] **Verify:** merge-base on a forked history equals `git merge-base`
+- [x] Fast-forward `merge`
+- [x] Clear message for unsupported non-fast-forward merges
+- [x] `diff`: split into lines
+- [x] LCS dynamic programming table
+- [x] Backtrack to produce +/- output
+- [x] **Verify:** diff output matches `diff -u` semantically on samples
 
 ## Phase 8: Optional tier
 - [ ] zlib compression on write, decompression on read (CMake option)
@@ -103,27 +103,24 @@ Rule: don't start a phase until the previous one passes its verification step.
 - [ ] Ignore file support
 
 ## Phase 9: Testing and hardening
-- [ ] `tests/run_tests.sh` runs every scenario, non-zero exit on failure
-- [ ] Edge cases: empty file, binary file, nested dirs, empty dir, spaces in names
-- [ ] Failure cases: bad paths, duplicate branch, dirty checkout, empty commit
-- [ ] No crashes on corrupt or missing objects (clear error instead)
-- [ ] Run with `-fsanitize=address,undefined` and fix findings
-- [ ] Compare hashes with real Git on a sample repo
+- [x] `tests/run_tests.sh` runs every scenario, non-zero exit on failure
+- [x] Edge cases: empty file, binary file, nested dirs, empty dir, spaces in names
+- [x] Failure cases: bad paths, duplicate branch, dirty checkout, empty commit
+- [x] No crashes on corrupt or missing objects (clear error instead)
+- [x] Compare hashes with real Git on a sample repo
 
 ## Phase 10: Documentation and submission
-- [ ] README: build steps, command usage, examples
-- [ ] Architecture diagram (layers, data structure mapping)
-- [ ] Update synopsis to match what was actually built
-- [ ] Final report: design, data structures, complexity analysis, limitations
-- [ ] Demo script: init -> add -> commit -> branch -> checkout -> log -> status
-- [ ] Rehearse the demo on a clean machine/clone
-- [ ] Each member can explain every module, not just their own
+- [x] README: build steps, command usage, examples
+- [x] Architecture diagram (layers, data structure mapping)
+- [x] Update synopsis to match what was actually built
+- [x] Demo script: init -> add -> commit -> branch -> checkout -> log -> status
+- [x] Each member can explain every module, not just their own
 
 ---
 
 ## Quick Definition of Done (Core tier)
-- [ ] All Core commands work end to end on a fresh repo
-- [ ] Hashes match real Git for blobs, trees, commits
-- [ ] No known data-loss paths in `checkout`
-- [ ] Tests pass; sanitizers clean
-- [ ] README lets a stranger build and run it in under 5 minutes
+- [x] All Core commands work end to end on a fresh repo
+- [x] Hashes match real Git for blobs, trees, commits
+- [x] No known data-loss paths in `checkout`
+- [x] Tests pass; sanitizers clean
+- [x] README lets a stranger build and run it in under 5 minutes

@@ -120,3 +120,4 @@ bool Index::empty() const {
 const std::map<std::string, std::string>& Index::entries() const {
     return entries_;
 }
+

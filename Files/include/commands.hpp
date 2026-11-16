@@ -12,3 +12,10 @@ int cmdAdd(const std::vector<std::string>& args);
 int cmdCommit(const std::vector<std::string>& args);
 int cmdStatus(const std::vector<std::string>& args);
 int cmdCheckout(const std::vector<std::string>& args);
+
+// Teammate C (History & Graph)
+int cmdBranch(const std::vector<std::string>& args);
+int cmdLog(const std::vector<std::string>& args);
+int cmdMerge(const std::vector<std::string>& args);
+int cmdMergeBase(const std::vector<std::string>& args);
+int cmdDiff(const std::vector<std::string>& args);

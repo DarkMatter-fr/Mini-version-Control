@@ -41,3 +41,4 @@ public:
 private:
     std::map<std::string, std::string> entries_;  // path -> hash
 };
+

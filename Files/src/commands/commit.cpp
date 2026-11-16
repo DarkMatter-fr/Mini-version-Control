@@ -113,3 +113,4 @@ int cmdCommit(const std::vector<std::string>& args) {
     std::cout << " " << index.size() << " file(s) changed\n";
     return 0;
 }
+

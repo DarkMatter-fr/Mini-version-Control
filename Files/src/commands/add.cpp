@@ -82,3 +82,4 @@ int cmdAdd(const std::vector<std::string>& args) {
     index.save(indexPath);
     return 0;
 }
+

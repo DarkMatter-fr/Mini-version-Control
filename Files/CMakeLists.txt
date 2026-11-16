@@ -14,19 +14,25 @@ endif()
 
 include_directories(include)
 
-# Common engine sources (Storage & Snapshots)
+# Complete engine sources (Storage, Snapshots & History)
 set(COMMON_SOURCES
     src/sha1.cpp
     src/object_store.cpp
     src/objects.cpp
     src/index.cpp
     src/refs.cpp
+    src/commit_graph.cpp
+    src/diff.cpp
     src/commands/init.cpp
     src/commands/hash_cat.cpp
     src/commands/add.cpp
     src/commands/commit.cpp
     src/commands/status.cpp
     src/commands/checkout.cpp
+    src/commands/branch.cpp
+    src/commands/log.cpp
+    src/commands/merge.cpp
+    src/commands/diff.cpp
 )
 
 # Main CLI executable
@@ -47,6 +53,13 @@ add_executable(test_snapshots
     ${COMMON_SOURCES}
 )
 
+# Test executable for Teammate C (History, DAG & Diff layer)
+add_executable(test_history
+    tests/test_history.cpp
+    ${COMMON_SOURCES}
+)
+
 enable_testing()
 add_test(NAME StorageTests COMMAND test_storage)
 add_test(NAME SnapshotsTests COMMAND test_snapshots)
+add_test(NAME HistoryTests COMMAND test_history)

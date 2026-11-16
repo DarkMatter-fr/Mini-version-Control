@@ -37,3 +37,4 @@ std::vector<std::string> listBranches(const std::filesystem::path& repoDir);
 bool isValidBranchName(const std::string& name);
 
 }  // namespace refs
+

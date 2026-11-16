@@ -32,7 +32,7 @@ def main():
     assert custom_git is not None, f"Custom git binary not found in candidates: {candidates}"
 
     print("========================================")
-    print("Running Git Parity Verification Tests")
+    print("Running Git Parity & End-to-End Tests")
     print(f"System git: {system_git}")
     print(f"Custom git: {custom_git}")
     print("========================================")
@@ -141,8 +141,83 @@ def main():
         print(f"  [OK] Commit hash matches git: {custom_commit_hash}")
         print("[PASS] Commit hash parity passed!")
 
+        # Test 4: Teammate B End-to-End (add, commit, status, checkout)
+        print("[RUN] Teammate B End-to-End workflow test...")
+        e2e_repo = os.path.join(test_dir, "e2e_repo")
+        rc, _, _ = run_cmd([custom_git, "init", e2e_repo])
+        assert rc == 0
+
+        # Create files
+        f1 = os.path.join(e2e_repo, "hello.txt")
+        os.makedirs(os.path.join(e2e_repo, "sub"), exist_ok=True)
+        f2 = os.path.join(e2e_repo, "sub", "world.txt")
+        with open(f1, "w") as f:
+            f.write("Hello B!\n")
+        with open(f2, "w") as f:
+            f.write("Sub World!\n")
+
+        # Status shows untracked
+        rc, out, _ = run_cmd([custom_git, "status"], cwd=e2e_repo)
+        assert rc == 0
+        assert "hello.txt" in out.decode()
+
+        # Add all
+        rc, out, _ = run_cmd([custom_git, "add", "."], cwd=e2e_repo)
+        assert rc == 0
+
+        # Status shows changes to be committed
+        rc, out, _ = run_cmd([custom_git, "status"], cwd=e2e_repo)
+        assert rc == 0
+        assert "Changes to be committed:" in out.decode()
+        assert "new file:   hello.txt" in out.decode()
+
+        # Commit
+        rc, out, _ = run_cmd([custom_git, "commit", "-m", "First commit"], cwd=e2e_repo)
+        assert rc == 0
+        assert "First commit" in out.decode()
+
+        # Status clean
+        rc, out, _ = run_cmd([custom_git, "status"], cwd=e2e_repo)
+        assert rc == 0
+        assert "nothing to commit, working tree clean" in out.decode()
+
+        # Branch creation and checkout
+        branch_file = os.path.join(e2e_repo, ".git", "refs", "heads", "feature")
+        with open(os.path.join(e2e_repo, ".git", "refs", "heads", "main"), "r") as f:
+            head_commit = f.read().strip()
+        with open(branch_file, "w") as f:
+            f.write(head_commit + "\n")
+
+        # Checkout feature
+        rc, out, _ = run_cmd([custom_git, "checkout", "feature"], cwd=e2e_repo)
+        assert rc == 0
+        assert "Switched to branch 'feature'" in out.decode()
+
+        # Add new file on feature branch
+        f3 = os.path.join(e2e_repo, "feature.txt")
+        with open(f3, "w") as f:
+            f.write("Feature branch content\n")
+        rc, _, _ = run_cmd([custom_git, "add", "feature.txt"], cwd=e2e_repo)
+        assert rc == 0
+        rc, _, _ = run_cmd([custom_git, "commit", "-m", "Feature commit"], cwd=e2e_repo)
+        assert rc == 0
+
+        assert os.path.exists(f3)
+
+        # Checkout main: feature.txt must disappear
+        rc, out, _ = run_cmd([custom_git, "checkout", "main"], cwd=e2e_repo)
+        assert rc == 0
+        assert not os.path.exists(f3)
+
+        # Checkout feature: feature.txt must reappear
+        rc, out, _ = run_cmd([custom_git, "checkout", "feature"], cwd=e2e_repo)
+        assert rc == 0
+        assert os.path.exists(f3)
+
+        print("[PASS] Teammate B End-to-End workflow passed!")
+
         print("========================================")
-        print("ALL GIT PARITY TESTS PASSED SUCCESSFULLY")
+        print("ALL TESTS PASSED SUCCESSFULLY")
         print("========================================")
 
     finally:

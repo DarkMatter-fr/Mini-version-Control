@@ -42,10 +42,17 @@ int main(int argc, char* argv[]) {
         return cmdHashObject(args);
     } else if (command == "cat-file") {
         return cmdCatFile(args);
-    } else if (command == "add" || command == "commit" || command == "status" ||
-               command == "checkout" || command == "log" || command == "branch" ||
+    } else if (command == "add") {
+        return cmdAdd(args);
+    } else if (command == "commit") {
+        return cmdCommit(args);
+    } else if (command == "status") {
+        return cmdStatus(args);
+    } else if (command == "checkout") {
+        return cmdCheckout(args);
+    } else if (command == "log" || command == "branch" ||
                command == "merge" || command == "merge-base" || command == "diff") {
-        std::cerr << "git: '" << command << "' is not yet implemented (scheduled for Teammate B/C in Phase 3-7).\n";
+        std::cerr << "git: '" << command << "' is not yet implemented (scheduled for Teammate C in Phase 4-7).\n";
         return 1;
     } else {
         std::cerr << "git: '" << command << "' is not a git command. See 'git --help'.\n";

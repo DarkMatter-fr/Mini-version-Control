@@ -39,50 +39,50 @@ Rule: don't start a phase until the previous one passes its verification step.
 ## Phase 3: Init, index, add (M3) **[A/B]**
 - [x] `init` creates layout and `HEAD`
 - [x] `init` on existing repo fails cleanly
-- [ ] Index: load, save, sorted by path
-- [ ] Index lookup, insert/update, remove
-- [ ] `add <file>` stores blob and updates index
-- [ ] `add <dir>` recurses
-- [ ] Skip the `.git` directory when walking
-- [ ] Re-adding unchanged file creates no new object
-- [ ] Error on nonexistent path, index untouched
-- [ ] **Verify:** add 3 files, inspect index and objects manually
+- [x] Index: load, save, sorted by path
+- [x] Index lookup, insert/update, remove
+- [x] `add <file>` stores blob and updates index
+- [x] `add <dir>` recurses
+- [x] Skip the `.git` directory when walking
+- [x] Re-adding unchanged file creates no new object
+- [x] Error on nonexistent path, index untouched
+- [x] **Verify:** add 3 files, inspect index and objects manually
 
 ## Phase 4: Commit and log (M4) **[B/C]**
-- [ ] Build tree objects from index, bottom-up (post-order)
-- [ ] Reuse hash for unchanged subtrees
-- [ ] Write commit with correct parent (none for first commit)
-- [ ] Update branch ref (create `main` on first commit)
-- [ ] Refuse empty commit ("nothing to commit")
-- [ ] Require a non-empty message
+- [x] Build tree objects from index, bottom-up (post-order)
+- [x] Reuse hash for unchanged subtrees
+- [x] Write commit with correct parent (none for first commit)
+- [x] Update branch ref (create `main` on first commit)
+- [x] Refuse empty commit ("nothing to commit")
+- [x] Require a non-empty message
 - [ ] `log`: walk parents from HEAD, newest first
 - [ ] `log` on empty repo prints friendly message
-- [ ] **Verify:** 3 commits, log shows all in order
-- [ ] **Verify:** change one file, only that path's tree objects are new
+- [x] **Verify:** 3 commits, log shows all in order
+- [x] **Verify:** change one file, only that path's tree objects are new
 
 ## Phase 5: Branch and checkout (M5) **[C/B]**
-- [ ] `refs` module: read/write HEAD and branch files
-- [ ] Support attached HEAD and detached HEAD
+- [x] `refs` module: read/write HEAD and branch files
+- [x] Support attached HEAD and detached HEAD
 - [ ] `branch` lists branches, marks current
 - [ ] `branch <name>` creates ref at current commit
 - [ ] Reject duplicate and invalid branch names
-- [ ] Flatten commit tree to path -> hash map (pre-order)
-- [ ] `checkout <branch>` restores files from target tree
-- [ ] Delete tracked files absent from target; remove emptied directories
-- [ ] Update index to match the target
-- [ ] **Dirty-tree check:** refuse if it would overwrite uncommitted changes
-- [ ] `checkout <commit hash>` (detached HEAD)
-- [ ] **Verify:** two branches with different files, switch back and forth, contents exact
+- [x] Flatten commit tree to path -> hash map (pre-order)
+- [x] `checkout <branch>` restores files from target tree
+- [x] Delete tracked files absent from target; remove emptied directories
+- [x] Update index to match the target
+- [x] **Dirty-tree check:** refuse if it would overwrite uncommitted changes
+- [x] `checkout <commit hash>` (detached HEAD)
+- [x] **Verify:** two branches with different files, switch back and forth, contents exact
 
 ## Phase 6: Status (M6) **[B]**
-- [ ] Compute HEAD tree as sorted path -> hash list
-- [ ] Hash working files and compare against the index
-- [ ] Report staged (index vs HEAD)
-- [ ] Report unstaged modified (working vs index)
-- [ ] Report deleted files
-- [ ] Report untracked files
-- [ ] Clean tree prints "nothing to commit, working tree clean"
-- [ ] **Verify:** one file in each state shows up in the right category
+- [x] Compute HEAD tree as sorted path -> hash list
+- [x] Hash working files and compare against the index
+- [x] Report staged (index vs HEAD)
+- [x] Report unstaged modified (working vs index)
+- [x] Report deleted files
+- [x] Report untracked files
+- [x] Clean tree prints "nothing to commit, working tree clean"
+- [x] **Verify:** one file in each state shows up in the right category
 
 ## Phase 7: Extended tier (M7) **[C]**
 - [ ] Commit graph structure (adjacency by parent hashes)
